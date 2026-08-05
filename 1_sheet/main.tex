@@ -1,140 +1,307 @@
-\documentclass[a4paper,12pt]{article}
+% ============================================
+% ALGEBRA HOMEWORK TEMPLATE
+% Clean, minimalist design for math assignments
+% Compatible with pdfLaTeX and XeLaTeX
+% ============================================
 
-% ========== Кодировка и язык ==========
-\usepackage[utf8]{inputenc}           % для pdflatex
-\usepackage[T2A]{fontenc}             % кириллица
-\usepackage[russian]{babel}           % русский язык
+\documentclass[12pt,a4paper]{article}
 
-% Если используете XeLaTeX, закомментируйте строки выше и раскомментируйте:
-% \usepackage{fontspec}
-% \setmainfont{Times New Roman}       % или другой шрифт
+% ---------- Encoding and Language ----------
+\usepackage[utf8]{inputenc}          % UTF-8 encoding (use utf8x if extended Cyrillic needed)
+\usepackage[T2A]{fontenc}           % Cyrillic font encoding (for pdfLaTeX)
+\usepackage[russian]{babel}         % Russian language support
 
-% ========== Математические пакеты ==========
-\usepackage{amsmath, amssymb, amsthm, mathtools}
-\usepackage{enumitem}                 % гибкие списки
-\usepackage{geometry}                 % настройка полей
-\geometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
+% ---------- Page Geometry ----------
+\usepackage[
+  left=2cm,
+  right=2cm,
+  top=2cm,
+  bottom=2cm,
+  headsep=0.5cm,
+  footskip=1cm
+]{geometry}
 
-% ========== Оформление заголовков ==========
-\usepackage{titlesec}
-\titleformat{\section}{\Large\bfseries\sffamily}{Задача \thesection}{1em}{}
-\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection)}{0.5em}{}
+% ---------- Mathematics ----------
+\usepackage{amsmath}                % Core math features
+\usepackage{amssymb}                % Additional math symbols
+\usepackage{amsthm}                 % Theorem-like environments
 
-% ========== Пользовательские команды ==========
-\newcommand{\task}[1]{\section*{#1}}          % для задач без автоматической нумерации
-\newenvironment{solution}{\par\noindent\textbf{Решение.}\quad}{\hfill$\square$\par}
-\newenvironment{remark}{\par\noindent\textbf{Замечание.}\quad}{}
+% ---------- Lists (Compact & Multi-level) ----------
+\usepackage{enumitem}
+% Set compact defaults for all lists
+\setlist{
+  noitemsep,                        % No extra space between items
+  topsep=0.5ex,                     % Minimal space above/below list
+  partopsep=0pt,                    % No extra space when starting a paragraph
+  parsep=0pt,                       % No space between paragraphs within items
+  leftmargin=2em,                   % Consistent indentation
+  labelsep=0.5em                    % Space between label and text
+}
+% Fine-tune specific list types
+\setlist[itemize]{label=---}        % Em-dash bullets
+\setlist[enumerate,1]{label=\arabic*.} % First level: 1.
+\setlist[enumerate,2]{label=\alph*)}  % Second level: a)
+\setlist[enumerate,3]{label=\roman*.} % Third level: i.
+\setlist[description]{font=\normalfont\itshape} % Description labels in italics
 
-% ========== Теоремы и определения ==========
-\theoremstyle{definition}
-\newtheorem{defn}{Определение}[section]
-\theoremstyle{plain}
-\newtheorem{thm}{Теорема}[section]
-\newtheorem{lem}{Лемма}[section]
-\newtheorem{prop}{Утверждение}[section]
+% ---------- Problem Environment ----------
+\newcounter{task}                   % Custom counter for problems
+\newcommand{\taskname}{}            % Placeholder for task label
 
-% ========== Дополнительные обозначения ==========
-\DeclareMathOperator{\Z}{\mathbb{Z}}
-\DeclareMathOperator{\Q}{\mathbb{Q}}
-\DeclareMathOperator{\R}{\mathbb{R}}
-\DeclareMathOperator{\N}{\mathbb{N}}
-\DeclareMathOperator{\Mobius}{\mu}    % функция Мёбиуса
+% Define the task environment
+\newenvironment{task}[1][]{%
+  \refstepcounter{task}%            % Increment and reference the counter
+  \par\vspace{0.3\baselineskip}%    % Tiny space before problem
+  \noindent\textbf{\thetask.}%      % Bold number with period
+  \if\relax\detokenize{#1}\relax   % Check if optional title is provided
+    \ \ignorespaces                 % Just space after number
+  \else
+    \ \textbf{#1}.\ \ignorespaces   % Space, bold title, period, space
+  \fi
+}{%
+  \par\vspace{0.2\baselineskip}%    % Tiny space after problem
+}
+
+% ---------- Solution Command ----------
+\newcommand{\sol}{%
+  \par\vspace{0.3\baselineskip}%    % Small space before solution
+  \noindent\textbf{Решение.}\ %    % Bold "Решение." with space after
+  \ignorespaces                     % Ignore spaces after the command
+}
+
+% ---------- Solution Sub-item Command (for numbered parts) ----------
+% Usage: \soli{1} or \soli{a}
+\newcommand{\soli}[1]{%
+  \par\vspace{0.15\baselineskip}%   % Tiny space before sub-solution
+  \noindent\textbf{#1)}\ %          % Bold number/letter with parenthesis
+  \ignorespaces                     % Ignore spaces after the command
+}
+
+% ---------- Header Configuration ----------
+\makeatletter
+\renewcommand{\@maketitle}{%
+  % Top row: Sheet number (left) and Student name (right)
+  \begin{flushleft}
+    \textbf{Листок \#\sheetnumber}%
+    \hfill%
+    \textbf{\studentname}%
+  \end{flushleft}
+  \vspace{-0.8\baselineskip}%      % Tighten vertical spacing
+  
+  % Bottom row: Assignment title
+  \begin{flushleft}
+    \textit{\assignmenttitle}%
+  \end{flushleft}
+  \vspace{-0.5\baselineskip}%      % Additional tightening
+}
+\makeatother
+
+% Define header variables
+\newcommand{\sheetnumber}[1]{\def\sheetnumber{#1}}
+\newcommand{\studentname}[1]{\def\studentname{#1}}
+\newcommand{\assignmenttitle}[1]{\def\assignmenttitle{#1}}
+
+% ---------- Other Settings ----------
+\date{}                             % Suppress automatic date
+\pagestyle{plain}                   % Simple page numbering
+\setlength{\parindent}{0pt}         % No paragraph indentation (modern style)
+\setlength{\parskip}{0.5ex}         % Small paragraph spacing
+
+% ============================================
+% DOCUMENT BEGIN
+% ============================================
 
 \begin{document}
 
-% ===== Заголовок =====
-\begin{center}
-    {\Huge\sffamily Решения к листочку по алгебре} \\[0.5cm]
-    \large Ваше имя, группа, дата
-\end{center}
-\vspace{1cm}
+% ---------- Custom Header ----------
+% Set your values here:
+\sheetnumber{1}                     % Replace with actual sheet number
+\studentname{Амехин Илья}           % Replace with student name
+\assignmenttitle{Алгебраические структуры и кольца вычетов} % Replace with assignment title
+\maketitle
 
-% ===== Задача 1 =====
-\section{}   % автоматическая нумерация
-\textbf{а)} Докажите, что множества $\Z$ и $2\Z$ изоморфны как абелевы группы относительно сложения. Изоморфны ли они как кольца?
+% ---------- Example Problems ----------
 
-\textbf{б)} Изоморфны ли как абелевы группы $(\R, +)$ и $(\Q, +)$? $(\Q, +)$ и $(\Z, +)$?
+% --- Problem 1 ---
+\begin{task}
+    \begin{enumerate}
+    	\item Докажите, что множества $\mathbb{Z}$ и $2\mathbb{Z}$ изоморфны как абелевы группы относительно сложения. Изоморфны ли они как кольца?
+	\item Изоморфны ли как абелевы группы $(\mathbb{R}, +)$ и $(\mathbb{Q}, +)$? $(\mathbb{Q}, +)$ и $(\mathbb{Z}, +)$?
+    \end{enumerate}
+\end{task}
 
-\begin{solution}
-    \textit{Здесь напишите решение.}
-\end{solution}
+\sol
+\soli{1} Рассмотрим отображение
+\[
+\varphi: \mathbb{Z} \to 2\mathbb{Z}, \qquad \varphi(n) = 2n.
+\]
 
-% ===== Задача 2 =====
-\section{}
-\textbf{а)} Докажите, что любая подгруппа $(\Z, +)$ имеет вид $n\Z$, где $n \ge 0$.
-
-\textbf{б)} Найдите обратный элемент к $[157]$ в кольце $\Z/235\Z$ и все целые решения уравнения $157x + 235y = 11$.
-
-\begin{solution}
-    % Ваше решение
-\end{solution}
-
-% ===== Задача 3 =====
-\section{}
-Убедитесь, что $\Z[\sqrt{5}] = \{ a + b\sqrt{5} \mid a,b\in\Z \}$ является коммутативным кольцом с единицей без делителей нуля (областью целостности). Покажите, что это кольцо не является факториальным.
-
-\begin{solution}
-    % Ваше решение
-\end{solution}
-
-% ===== Задача 4 =====
-\section{}
-\textbf{а)} Чему равно 17-е натуральное число, дающее остатки $2,4,6,8$ от деления на $5,9,11,14$?
-
-\textbf{б)} Сколько решений в кольце $\Z/360\Z$ имеет уравнение $x^2 = 2$?
-
-\textbf{в)} Сколько решений в кольце $\Z/n\Z$ имеет уравнение $x^2 = 1$?
-
-\begin{solution}
-    % Ваше решение
-\end{solution}
-
-% ===== Задача 5 =====
-\section{}
-Рассмотрим группу обратимых элементов $(\Z/n\Z)^\times$. Определим функцию Эйлера формулой $\varphi(n) = |(\Z/n\Z)^\times|$.
-
-\textbf{а)} Докажите теорему Эйлера: $a^{\varphi(n)} = 1$ для любого $a \in (\Z/n\Z)^\times$.
-
-\textbf{б)} Покажите, что $\varphi(n) = n(1 - p_1^{-1})\dots(1 - p_k^{-1})$, где $n = p_1^{\alpha_1}\dots p_k^{\alpha_k}$, $p_i$ --- различные простые числа.
-
-\begin{solution}
-    % Ваше решение
-\end{solution}
-
-% ===== Задача 6 =====
-\section{}
-Введём на множестве $X$ функций $f:\Z_{>0} \to \R$ две операции:
-\begin{enumerate}[label=(\arabic*)]
-    \item поточечное сложение: $(f+g)(n) = f(n)+g(n)$;
-    \item свёртка Дирихле: $(f*g)(n) = \sum_{d|n} f(d)g\left(\frac{n}{d}\right)$.
+Оно является:
+\begin{enumerate}
+    \item \textbf{Гомоморфизмом:} 
+    \[
+    \varphi(a+b)=2(a+b)=2a+2b=\varphi(a)+\varphi(b).
+    \]
+    \item \textbf{Инъекцией:} 
+    \[
+    \varphi(a)=\varphi(b) \implies 2a=2b \implies a=b.
+    \]
+    \item \textbf{Сюръекцией:} любой элемент $2k \in 2\mathbb{Z}$ имеет прообраз $k \in \mathbb{Z}$, так как $\varphi(k)=2k$.
 \end{enumerate}
 
-\textbf{а)} Докажите, что $(X,+,\*)$ --- коммутативное кольцо с единицей (какая функция является единицей этого кольца?). Опишите все обратимые элементы.
-
-\textbf{б)} Найдите обратный элемент к функции
+Следовательно, $\varphi$ — изоморфизм групп. Значит,
 \[
-\mathbf{1}: \Z_{>0} \to \R, \quad n \mapsto 1.
+\mathbb{Z} \cong 2\mathbb{Z}.
 \]
-Этот элемент называется функцией Мёбиуса.
 
-\begin{solution}
-    % Ваше решение
-\end{solution}
+\hfill $\square$
 
-% ===== Задача 7 =====
-\section{}
-\textbf{а)} Пусть $\xi$ --- первообразный корень по модулю простого $p>2$. Докажите, что $\xi$ или $\xi+p$ является первообразным корнем по модулю $p^2$.
+$\mathbb{Z}$ и 2$\mathbb{Z}$ неизоморфны как кольца. Предположим противное: пусть существует изоморфизм колец
+\[
+\varphi: \mathbb{Z} \to 2\mathbb{Z}.
+\]
 
-\textbf{б)} Докажите, что если $\xi$ --- первообразный корень по модулю $p$ и $p^2$, то $\xi$ --- первообразный корень по модулю $p^k$ для любого $k>0$.
+В любом кольце с единицей изоморфизм переводит единицу в единицу. Кольцо $\mathbb{Z}$ имеет единицу $1$. Значит,
+\[
+\varphi(1) = 1_{2\mathbb{Z}},
+\]
+где $1_{2\mathbb{Z}}$ — единичный элемент кольца $2\mathbb{Z}$.
 
-\textbf{в)} Докажите существование первообразного корня по модулю $2p^k$ для всех простых $p>2$ и всех $k\in\N$.
+Но в кольце $2\mathbb{Z}$ \emph{нет} единичного элемента: для любого $2k \in 2\mathbb{Z}$ выполнено
+\[
+(2k) \cdot 2 = 4k \neq 2k
+\]
+при $k \neq 0$, а при $k=0$ получаем $0\cdot 2 = 0$, но это не единица для других элементов.
 
-\textbf{г)} Покажите, что первообразный корень в $\Z/n\Z$ существует только для $n=2,4,p^k,2p^k$, где $p>2$ --- простое, $k\in\N$. Иными словами, группа $(\Z/n\Z)^\times$ циклическая только при таких $n$.
+Следовательно, $\varphi(1)$ не может существовать в $2\mathbb{Z}$. Противоречие.
 
-\textbf{д)} Найдите количество первообразных корней в $\Z/n\Z$. Если $a$ --- первообразный корень по модулю $n$, как выражаются все остальные первообразные корни?
+Значит, изоморфизма колец не существует:
+\[
+\mathbb{Z} \not\cong 2\mathbb{Z}.
+\]
 
-\begin{solution}
-    % Ваше решение
-\end{solution}
+\hfill $\square$
+
+\newpage
+
+\soli{2} 
+\begin{enumerate}
+    \item Используем \textbf{кардинальность}:
+    \[
+    |\mathbb{Q}| = \aleph_0, \qquad |\mathbb{R}| = 2^{\aleph_0}.
+    \]
+    Любой изоморфизм групп является биекцией, а биекция сохраняет мощность. Так как мощности различны, изоморфизма не существует:
+    \[
+    (\mathbb{Q}, +) \not\cong (\mathbb{R}, +).
+    \]
+
+    \item В группе $(\mathbb{Z}, +)$ все ненулевые элементы имеют бесконечный порядок, но группа порождается одним элементом ($\mathbb{Z} = \langle 1 \rangle$), то есть является циклической.
+
+    Группа $(\mathbb{Q}, +)$ \emph{не является циклической}: предположим, что $\mathbb{Q} = \langle a/b \rangle$. Тогда все элементы имели бы вид $n \cdot (a/b)$, то есть были бы целыми кратными числа $a/b$. Но, например, число $a/(2b)$ не представимо в таком виде. Противоречие.
+
+    Следовательно, они не изоморфны.
+\end{enumerate}
+
+
+
+% --- Problem 2 ---
+\begin{task}
+    \begin{enumerate}
+	\item Докажите, что любая подгруппа $(\mathbb{Z}, +)$ имеет вид $n \mathbb{Z}$, где $n \geq 0$
+	\item Найдите обратный элемент к $[157]$ в кольце $\mathbb{Z}/235\mathbb{Z}$ и все целые решения уравнения $157x + 235y = 11$. 
+    \end{enumerate}
+\end{task}
+
+
+\sol
+\soli{1}
+Пусть $H \leqslant \mathbb{Z}$.
+
+\begin{enumerate}
+    \item Если $H = \{0\}$, то $H = 0\mathbb{Z}$.
+    
+    \item Пусть $H \neq \{0\}$. Тогда в $H$ есть ненулевые элементы. Так как $H$ — подгруппа, вместе с каждым элементом она содержит и его противоположный. Следовательно, в $H$ есть положительные элементы.
+    
+    Обозначим через $n$ \emph{наименьший положительный} элемент из $H$:
+    \[
+    n = \min\{ h \in H \mid h > 0 \}.
+    \]
+    
+    Докажем, что $H = n\mathbb{Z}$.
+    
+    \begin{enumerate}
+	\item \textbf{$n\mathbb{Z} \subseteq H$:} Так как $n \in H$, то $n + n + \dots + n \in H$ и $(-n) + (-n) + \dots \in H$. Значит, все кратные $n$ принадлежат $H$.
+    
+	\item \textbf{$H \subseteq n\mathbb{Z}$:} Возьмём произвольный $h \in H$. Разделим $h$ на $n$ с остатком:
+	\[
+	h = qn + r, \qquad 0 \leqslant r < n, \quad q \in \mathbb{Z}.
+	\]
+	Тогда
+	\[
+	r = h - qn.
+	\]
+	Здесь $h \in H$ и $qn \in H$ (так как $n \in H$), следовательно, $r \in H$.
+    
+	Но $0 \leqslant r < n$, а $n$ — наименьший положительный элемент в $H$. Значит, $r$ не может быть положительным. Следовательно, $r = 0$.
+    
+	Таким образом, $h = qn$, то есть $h \in n\mathbb{Z}$.
+    \end{enumerate} 
+    Получили $H = n\mathbb{Z}$, где $n \geqslant 0$. 
+\end{enumerate}
+
+Итак, любая подгруппа $\mathbb{Z}$ является циклической и порождается своим наименьшим положительным элементом. \hfill $\square$
+
+% --- Problem 3 with enumerated sub-items ---
+\begin{task}
+  Определите, являются ли следующие множества группами относительно указанной операции:
+  \begin{enumerate}
+    \item Множество $\mathbb{R}^+$ с операцией умножения.
+    \item Множество $\mathbb{R}$ с операцией $a * b = a + b + ab$.
+    \item Множество матриц вида $\begin{pmatrix} a & b \\ 0 & 1 \end{pmatrix}$ ($a \neq 0$) с матричным умножением.
+  \end{enumerate}
+\end{task}
+
+% --- Problem 4 with itemize ---
+\begin{task}
+  Приведите примеры следующих алгебраических структур:
+  \begin{itemize}
+    \item Полугруппы, не являющейся моноидом.
+    \item Неабелевой группы порядка 6.
+    \item Кольца с делителями нуля.
+  \end{itemize}
+\end{task}
+
+% --- Problem 5 with description list ---
+\begin{task}
+  Сопоставьте каждую структуру с её определением:
+  \begin{description}
+    \item[Группа] Множество с ассоциативной бинарной операцией, в котором существует нейтральный элемент и для каждого элемента существует обратный.
+    \item[Кольцо] Множество с двумя бинарными операциями, образующее абелеву группу по сложению и моноид по умножению, связанных дистрибутивным законом.
+    \item[Поле] Коммутативное кольцо с единицей, в котором каждый ненулевой элемент обратим.
+  \end{description}
+\end{task}
+
+% --- Problem 6 with nested enumeration ---
+\begin{task}
+  Рассмотрите группу перестановок $S_3$:
+  \begin{enumerate}
+    \item Найдите все подгруппы группы $S_3$:
+    \begin{enumerate}
+      \item определите порядок каждой подгруппы;
+      \item проверьте, какие из них являются нормальными.
+    \end{enumerate}
+    \item Постройте таблицу Кэли для факторгруппы, если она существует.
+  \end{enumerate}
+\end{task}
+
+% --- Problem 7 with label/reference ---
+\begin{task}
+  \label{task:lagrange}
+  Сформулируйте и докажите теорему Лагранжа о порядке подгруппы конечной группы.
+\end{task}
+
+% Referencing example (uncomment to use):
+% Как показано в задаче \ref{task:lagrange}, порядок подгруппы делит порядок группы.
 
 \end{document}
+
