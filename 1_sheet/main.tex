@@ -1,0 +1,140 @@
+\documentclass[a4paper,12pt]{article}
+
+% ========== Кодировка и язык ==========
+\usepackage[utf8]{inputenc}           % для pdflatex
+\usepackage[T2A]{fontenc}             % кириллица
+\usepackage[russian]{babel}           % русский язык
+
+% Если используете XeLaTeX, закомментируйте строки выше и раскомментируйте:
+% \usepackage{fontspec}
+% \setmainfont{Times New Roman}       % или другой шрифт
+
+% ========== Математические пакеты ==========
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{enumitem}                 % гибкие списки
+\usepackage{geometry}                 % настройка полей
+\geometry{left=2cm, right=2cm, top=2cm, bottom=2cm}
+
+% ========== Оформление заголовков ==========
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\sffamily}{Задача \thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection)}{0.5em}{}
+
+% ========== Пользовательские команды ==========
+\newcommand{\task}[1]{\section*{#1}}          % для задач без автоматической нумерации
+\newenvironment{solution}{\par\noindent\textbf{Решение.}\quad}{\hfill$\square$\par}
+\newenvironment{remark}{\par\noindent\textbf{Замечание.}\quad}{}
+
+% ========== Теоремы и определения ==========
+\theoremstyle{definition}
+\newtheorem{defn}{Определение}[section]
+\theoremstyle{plain}
+\newtheorem{thm}{Теорема}[section]
+\newtheorem{lem}{Лемма}[section]
+\newtheorem{prop}{Утверждение}[section]
+
+% ========== Дополнительные обозначения ==========
+\DeclareMathOperator{\Z}{\mathbb{Z}}
+\DeclareMathOperator{\Q}{\mathbb{Q}}
+\DeclareMathOperator{\R}{\mathbb{R}}
+\DeclareMathOperator{\N}{\mathbb{N}}
+\DeclareMathOperator{\Mobius}{\mu}    % функция Мёбиуса
+
+\begin{document}
+
+% ===== Заголовок =====
+\begin{center}
+    {\Huge\sffamily Решения к листочку по алгебре} \\[0.5cm]
+    \large Ваше имя, группа, дата
+\end{center}
+\vspace{1cm}
+
+% ===== Задача 1 =====
+\section{}   % автоматическая нумерация
+\textbf{а)} Докажите, что множества $\Z$ и $2\Z$ изоморфны как абелевы группы относительно сложения. Изоморфны ли они как кольца?
+
+\textbf{б)} Изоморфны ли как абелевы группы $(\R, +)$ и $(\Q, +)$? $(\Q, +)$ и $(\Z, +)$?
+
+\begin{solution}
+    \textit{Здесь напишите решение.}
+\end{solution}
+
+% ===== Задача 2 =====
+\section{}
+\textbf{а)} Докажите, что любая подгруппа $(\Z, +)$ имеет вид $n\Z$, где $n \ge 0$.
+
+\textbf{б)} Найдите обратный элемент к $[157]$ в кольце $\Z/235\Z$ и все целые решения уравнения $157x + 235y = 11$.
+
+\begin{solution}
+    % Ваше решение
+\end{solution}
+
+% ===== Задача 3 =====
+\section{}
+Убедитесь, что $\Z[\sqrt{5}] = \{ a + b\sqrt{5} \mid a,b\in\Z \}$ является коммутативным кольцом с единицей без делителей нуля (областью целостности). Покажите, что это кольцо не является факториальным.
+
+\begin{solution}
+    % Ваше решение
+\end{solution}
+
+% ===== Задача 4 =====
+\section{}
+\textbf{а)} Чему равно 17-е натуральное число, дающее остатки $2,4,6,8$ от деления на $5,9,11,14$?
+
+\textbf{б)} Сколько решений в кольце $\Z/360\Z$ имеет уравнение $x^2 = 2$?
+
+\textbf{в)} Сколько решений в кольце $\Z/n\Z$ имеет уравнение $x^2 = 1$?
+
+\begin{solution}
+    % Ваше решение
+\end{solution}
+
+% ===== Задача 5 =====
+\section{}
+Рассмотрим группу обратимых элементов $(\Z/n\Z)^\times$. Определим функцию Эйлера формулой $\varphi(n) = |(\Z/n\Z)^\times|$.
+
+\textbf{а)} Докажите теорему Эйлера: $a^{\varphi(n)} = 1$ для любого $a \in (\Z/n\Z)^\times$.
+
+\textbf{б)} Покажите, что $\varphi(n) = n(1 - p_1^{-1})\dots(1 - p_k^{-1})$, где $n = p_1^{\alpha_1}\dots p_k^{\alpha_k}$, $p_i$ --- различные простые числа.
+
+\begin{solution}
+    % Ваше решение
+\end{solution}
+
+% ===== Задача 6 =====
+\section{}
+Введём на множестве $X$ функций $f:\Z_{>0} \to \R$ две операции:
+\begin{enumerate}[label=(\arabic*)]
+    \item поточечное сложение: $(f+g)(n) = f(n)+g(n)$;
+    \item свёртка Дирихле: $(f*g)(n) = \sum_{d|n} f(d)g\left(\frac{n}{d}\right)$.
+\end{enumerate}
+
+\textbf{а)} Докажите, что $(X,+,\*)$ --- коммутативное кольцо с единицей (какая функция является единицей этого кольца?). Опишите все обратимые элементы.
+
+\textbf{б)} Найдите обратный элемент к функции
+\[
+\mathbf{1}: \Z_{>0} \to \R, \quad n \mapsto 1.
+\]
+Этот элемент называется функцией Мёбиуса.
+
+\begin{solution}
+    % Ваше решение
+\end{solution}
+
+% ===== Задача 7 =====
+\section{}
+\textbf{а)} Пусть $\xi$ --- первообразный корень по модулю простого $p>2$. Докажите, что $\xi$ или $\xi+p$ является первообразным корнем по модулю $p^2$.
+
+\textbf{б)} Докажите, что если $\xi$ --- первообразный корень по модулю $p$ и $p^2$, то $\xi$ --- первообразный корень по модулю $p^k$ для любого $k>0$.
+
+\textbf{в)} Докажите существование первообразного корня по модулю $2p^k$ для всех простых $p>2$ и всех $k\in\N$.
+
+\textbf{г)} Покажите, что первообразный корень в $\Z/n\Z$ существует только для $n=2,4,p^k,2p^k$, где $p>2$ --- простое, $k\in\N$. Иными словами, группа $(\Z/n\Z)^\times$ циклическая только при таких $n$.
+
+\textbf{д)} Найдите количество первообразных корней в $\Z/n\Z$. Если $a$ --- первообразный корень по модулю $n$, как выражаются все остальные первообразные корни?
+
+\begin{solution}
+    % Ваше решение
+\end{solution}
+
+\end{document}
