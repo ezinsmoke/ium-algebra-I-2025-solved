@@ -62,6 +62,22 @@
   \par\vspace{0.2\baselineskip}%    % Tiny space after problem
 }
 
+% ---------- Solution Command ----------
+\newcommand{\sol}{%
+  \par\vspace{0.3\baselineskip}%    % Small space before solution
+  \noindent\textbf{Решение.}\ %    % Bold "Решение." with space after
+  \ignorespaces                     % Ignore spaces after the command
+}
+
+% ---------- Solution Sub-item Command (for numbered parts) ----------
+% Usage: \soli{1} or \soli{a}
+\newcommand{\soli}[1]{%
+  \par\vspace{0.15\baselineskip}%   % Tiny space before sub-solution
+  \noindent\textbf{#1)}\ %          % Bold number/letter with parenthesis
+  \ignorespaces                     % Ignore spaces after the command
+}
+
+
 % ---------- Header Configuration ----------
 \makeatletter
 \renewcommand{\@maketitle}{%
