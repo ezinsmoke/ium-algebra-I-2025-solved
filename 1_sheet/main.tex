@@ -653,6 +653,8 @@ n = p_1^{\alpha_1} p_2^{\alpha_2} \cdots p_k^{\alpha_k},
 \boxed{\varphi(n) = n \prod_{p \mid n} \left(1 - \frac{1}{p}\right)}.
 \]
 
+% --- Problem 6 ---
+
 \begin{task}
     Введём на множестве $X$ функций $f : \mathbb{Z}_{>0} \to \mathbb{R}$ две операции:
     \begin{itemize}
@@ -667,6 +669,127 @@ n = p_1^{\alpha_1} p_2^{\alpha_2} \cdots p_k^{\alpha_k},
 	    Этот элемент называется \textit{функцией Мёбиуса}
     \end{enumerate}
 \end{task}
+
+\sol
+\soli{1}
+
+Рассмотрим множество
+\[
+X=\{f:\mathbb Z_{>0}\to \mathbb R\}.
+\]
+На нём заданы операции:
+\[
+(f+g)(n)=f(n)+g(n),\qquad 
+(f*g)(n)=\sum_{d\mid n} f(d)g\!\left(\frac nd\right).
+\]
+
+Докажем, что $(X,+,*)$ -- коммутативное кольцо с единицей.
+
+\paragraph{1. Аддитивная группа}
+Сложение поточечное, поэтому $(X,+)$ -- абелева группа:
+\begin{itemize}
+\item сложение ассоциативно и коммутативно;
+\item нулевой элемент -- функция $0(n)=0$;
+\item противоположный к $f$ -- функция $-f$, $(-f)(n)=-f(n)$.
+\end{itemize}
+
+\paragraph{2. Свойства умножения (свёртки Дирихле)} проверим все свойства:
+
+\textbf{Коммутативность:}
+\[
+(f*g)(n)=\sum_{d\mid n} f(d)g\!\left(\frac nd\right)
+=\sum_{e\mid n} g(e)f\!\left(\frac ne\right)=(g*f)(n),
+\]
+где $e=n/d$.
+
+\textbf{Ассоциативность:}
+\[
+((f*g)*h)(n)
+=\sum_{d\mid n}(f*g)(d)h\!\left(\frac nd\right)
+=\sum_{d\mid n}\sum_{a\mid d} f(a)g\!\left(\frac da\right)h\!\left(\frac nd\right).
+\]
+Полагая $d=ab$, $n=abc$, получаем
+\[
+((f*g)*h)(n)=\sum_{abc=n} f(a)g(b)h(c).
+\]
+Аналогично
+\[
+(f*(g*h))(n)=\sum_{abc=n} f(a)g(b)h(c),
+\]
+значит свёртка ассоциативна.
+
+\textbf{Дистрибутивность:}
+\[
+(f*(g+h))(n)
+=\sum_{d\mid n} f(d)(g+h)\!\left(\frac nd\right)
+=\sum_{d\mid n} f(d)g\!\left(\frac nd\right)
++\sum_{d\mid n} f(d)h\!\left(\frac nd\right)
+=(f*g+f*h)(n).
+\]
+Аналогично из коммутативности получаем $(f+g)*h=f*h+g*h$.
+
+\paragraph{3. Единица кольца}
+
+Единичным элементом является функция
+\[
+\varepsilon(n)=
+\begin{cases}
+1,& n=1,\\
+0,& n>1.
+\end{cases}
+\]
+Действительно,
+\[
+(\varepsilon*f)(n)=\sum_{d\mid n}\varepsilon(d)f\!\left(\frac nd\right)=f(n),
+\]
+так как единственное ненулевое слагаемое получается при $d=1$. Аналогично $f*\varepsilon=f$.
+
+Следовательно, $(X,+,*)$ -- коммутативное кольцо с единицей $\varepsilon$.
+
+\paragraph{4. Обратимые элементы}
+
+Докажем, что
+\[
+f \text{ обратим } \iff f(1)\ne 0.
+\]
+
+\textbf{Необходимость.}
+Пусть $f*g=\varepsilon$. Тогда при $n=1$:
+\[
+(f*g)(1)=f(1)g(1)=\varepsilon(1)=1,
+\]
+значит $f(1)\ne 0$.
+
+\textbf{Достаточность.}
+Пусть $f(1)\ne 0$. Построим обратную функцию $g$ рекурсивно.
+
+Положим
+\[
+g(1)=\frac1{f(1)}.
+\]
+Для $n>1$ определим
+\[
+g(n)=-\frac1{f(1)}
+\sum_{\substack{d\mid n\\ d>1}} f(d)\,g\!\left(\frac nd\right).
+\]
+Так как при $d>1$ число $n/d<n$, то $g(n/d)$ уже определено по индукции, значит $g$ корректно задана на всех $n$.
+
+Тогда для $n=1$:
+\[
+(f*g)(1)=f(1)g(1)=1=\varepsilon(1).
+\]
+Для $n>1$:
+\[
+(f*g)(n)=\sum_{d\mid n} f(d)g\!\left(\frac nd\right)
+=f(1)g(n)+\sum_{\substack{d\mid n\\ d>1}} f(d)g\!\left(\frac nd\right)=0=\varepsilon(n).
+\]
+Таким образом, $f*g=\varepsilon$, то есть $g$ -- обратный элемент к $f$.
+
+Следовательно, обратимые элементы кольца $(X,+,*)$ -- это в точности функции $f:\mathbb Z_{>0}\to\mathbb R$ такие, что
+\[
+f(1)\ne 0.
+\]  \hfill $\square$
+
 
 
 \end{document}
