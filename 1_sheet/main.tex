@@ -653,7 +653,20 @@ n = p_1^{\alpha_1} p_2^{\alpha_2} \cdots p_k^{\alpha_k},
 \boxed{\varphi(n) = n \prod_{p \mid n} \left(1 - \frac{1}{p}\right)}.
 \]
 
+\begin{task}
+    Введём на множестве $X$ функций $f : \mathbb{Z}_{>0} \to \mathbb{R}$ две операции:
+    \begin{itemize}
+	\item поточечное сложение: $(f+g)(n) = f(n) + g(n)$;
+	\item свёртка Дирихле: $(f * g)(n) = \sum_{d \mid n} f(d) g(\frac{n}{d})$.
+    \end{itemize}
+    \begin{enumerate}
+	\item Докажите, что $(X, +, *)$ -- коммутативное кольцо с единицей (какая функция является единицей этого кольца?). Опишите все обратимые элементы
 
+	\item Найдите обратный элемент функции 
+	    \[1: \mathbb{Z}_{>0} \xrightarrow{n \mapsto 1} \mathbb{R} \]
+	    Этот элемент называется \textit{функцией Мёбиуса}
+    \end{enumerate}
+\end{task}
 
 
 \end{document}
