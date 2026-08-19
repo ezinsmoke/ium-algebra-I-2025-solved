@@ -839,8 +839,120 @@ f(1)\ne 0.
 \sol
 \soli{1}
 
+Пусть $g=\xi$ и $\operatorname{ord}_p(g)=p-1$. Обозначим
+\[
+d=\operatorname{ord}_{p^2}(g).
+\]
+Из $g^d\equiv1\pmod{p^2}$ следует $g^d\equiv1\pmod p$, поэтому
+\[
+p-1=\operatorname{ord}_p(g)\mid d.
+\]
+С другой стороны,
+\[
+d\mid\varphi(p^2)=p(p-1),
+\]
+следовательно,
+\[
+d\in\{p-1,p(p-1)\}.
+\]
 
+Если $g^{p-1}\not\equiv1\pmod{p^2}$, то $d\neq p-1$, откуда
+\[
+d=p(p-1),
+\]
+то есть $g$ является первообразным корнем по модулю $p^2$.
 
+Пусть теперь $g^{p-1}\equiv1\pmod{p^2}$. Так как
+\[
+g+p\equiv g\pmod p,
+\]
+то
+\[
+\operatorname{ord}_p(g+p)=p-1.
+\]
+Следовательно, для $d'=\operatorname{ord}_{p^2}(g+p)$ имеем
+\[
+d'\mid p(p-1),\qquad p-1\mid d',
+\]
+то есть $d'\in\{p-1,p(p-1)\}$.
+
+По биномиальной формуле
+\[
+(g+p)^{p-1}
+\equiv g^{p-1}+p(p-1)g^{p-2}
+\equiv1+p(p-1)g^{p-2}\pmod{p^2}.
+\]
+Поскольку $p\nmid g$ и $p\nmid p-1$, имеем
+\[
+p\nmid(p-1)g^{p-2},
+\]
+следовательно,
+\[
+(g+p)^{p-1}\not\equiv1\pmod{p^2}.
+\]
+Таким образом, $d'\neq p-1$, и потому
+\[
+d'=p(p-1).
+\]
+Следовательно, $g+p$ является первообразным корнем по модулю $p^2$.
+\hfill $\square$
+
+\newpage
+
+\soli{2}
+
+Пусть $g=\xi$. По условию $g$ является первообразным корнем по модулям $p$ и $p^2$, то есть
+\[
+\operatorname{ord}_{p^2}(g)=p(p-1),
+\]
+откуда
+\[
+g^{p-1}\not\equiv1\pmod{p^2}.
+\]
+Так как $g^{p-1}\equiv1\pmod p$, имеем
+\[
+g^{p-1}=1+cp,\qquad p\nmid c.
+\]
+
+Докажем индукцией по $k\ge1$, что
+\[
+\operatorname{ord}_{p^k}(g)=p^{k-1}(p-1).
+\]
+Для $k=1,2$ утверждение верно по условию.
+
+Пусть $k\ge2$ и
+\[
+\operatorname{ord}_{p^k}(g)=p^{k-1}(p-1).
+\]
+Так как $p$ нечётное, по лемме LTE
+\[
+\begin{aligned}
+v_p\left(g^{p^{k-1}(p-1)}-1\right)
+&=v_p\left((g^{p-1})^{p^{k-1}}-1\right)\\
+&=v_p(g^{p-1}-1)+v_p(p^{k-1})\\
+&=1+(k-1)=k.
+\end{aligned}
+\]
+Следовательно,
+\[
+g^{p^{k-1}(p-1)}
+\not\equiv1\pmod{p^{k+1}}.
+\]
+Порядок $g$ по модулю $p^{k+1}$ делит
+\[
+\varphi(p^{k+1})=p^k(p-1)
+\]
+и кратен
+\[
+\operatorname{ord}_{p^k}(g)=p^{k-1}(p-1).
+\]
+Поскольку он не равен $p^{k-1}(p-1)$, получаем
+\[
+\operatorname{ord}_{p^{k+1}}(g)=p^k(p-1).
+\]
+Следовательно, $g=\xi$ является первообразным корнем по модулю $p^k$ для любого $k>0$. \hfill $\square$
+
+\soli{3}
 
 
 \end{document}
