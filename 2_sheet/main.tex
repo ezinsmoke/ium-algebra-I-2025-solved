@@ -1,0 +1,281 @@
+% ============================================
+% Compatible with pdfLaTeX and XeLaTeX
+% ============================================
+
+\documentclass[12pt,a4paper]{article}
+
+% ---------- Encoding and Language ----------
+\usepackage[utf8]{inputenc}          % UTF-8 encoding (use utf8x if extended Cyrillic needed)
+\usepackage[T2A]{fontenc}           % Cyrillic font encoding (for pdfLaTeX)
+\usepackage[russian]{babel}         % Russian language support
+
+% ---------- Page Geometry ----------
+\usepackage[
+  left=2cm,
+  right=2cm,
+  top=2cm,
+  bottom=2cm,
+  headsep=0.5cm,
+  footskip=1cm
+]{geometry}
+
+% ---------- Mathematics ----------
+\usepackage{amsmath}                % Core math features
+\usepackage{amssymb}                % Additional math symbols
+\usepackage{amsthm}                 % Theorem-like environments
+
+% ---------- Lists (Compact & Multi-level) ----------
+\usepackage{enumitem}
+% Set compact defaults for all lists
+\setlist{
+  noitemsep,                        % No extra space between items
+  topsep=0.5ex,                     % Minimal space above/below list
+  partopsep=0pt,                    % No extra space when starting a paragraph
+  parsep=0pt,                       % No space between paragraphs within items
+  leftmargin=2em,                   % Consistent indentation
+  labelsep=0.5em                    % Space between label and text
+}
+% Fine-tune specific list types
+\setlist[itemize]{label=---}        % Em-dash bullets
+\setlist[enumerate,1]{label=\arabic*.} % First level: 1.
+\setlist[enumerate,2]{label=\alph*)}  % Second level: a)
+\setlist[enumerate,3]{label=\roman*.} % Third level: i.
+\setlist[description]{font=\normalfont\itshape} % Description labels in italics
+
+% ---------- Problem Environment ----------
+\newcounter{task}                   % Custom counter for problems
+\newcommand{\taskname}{}            % Placeholder for task label
+
+% Define the task environment
+\newenvironment{task}[1][]{%
+  \refstepcounter{task}%            % Increment and reference the counter
+  \par\vspace{0.3\baselineskip}%    % Tiny space before problem
+  \noindent\textbf{\thetask.}%      % Bold number with period
+  \if\relax\detokenize{#1}\relax   % Check if optional title is provided
+    \ \ignorespaces                 % Just space after number
+  \else
+    \ \textbf{#1}.\ \ignorespaces   % Space, bold title, period, space
+  \fi
+}{%
+  \par\vspace{0.2\baselineskip}%    % Tiny space after problem
+}
+
+% ---------- Solution Command ----------
+\newcommand{\sol}{%
+  \par\vspace{0.3\baselineskip}%    % Small space before solution
+  \noindent\textbf{Решение.}\ %    % Bold "Решение." with space after
+  \ignorespaces                     % Ignore spaces after the command
+}
+
+% ---------- Solution Sub-item Command (for numbered parts) ----------
+% Usage: \soli{1} or \soli{a}
+\newcommand{\soli}[1]{%
+  \par\vspace{0.15\baselineskip}%   % Tiny space before sub-solution
+  \noindent\textbf{#1)}\ %          % Bold number/letter with parenthesis
+  \ignorespaces                     % Ignore spaces after the command
+}
+
+% ---------- Header Configuration ----------
+\makeatletter
+\renewcommand{\@maketitle}{%
+  % Top row: Sheet number (left) and Student name (right)
+  \begin{flushleft}
+    \textbf{Листок \#\sheetnumber}%
+    \hfill%
+    \textbf{\studentname}%
+  \end{flushleft}
+  \vspace{-0.8\baselineskip}%      % Tighten vertical spacing
+  
+  % Bottom row: Assignment title
+  \begin{flushleft}
+    \textit{\assignmenttitle}%
+  \end{flushleft}
+  \vspace{-0.5\baselineskip}%      % Additional tightening
+}
+\makeatother
+
+% Define header variables
+\newcommand{\sheetnumber}[1]{\def\sheetnumber{#1}}
+\newcommand{\studentname}[1]{\def\studentname{#1}}
+\newcommand{\assignmenttitle}[1]{\def\assignmenttitle{#1}}
+
+% ---------- Other Settings ----------
+\date{}                             % Suppress automatic date
+\pagestyle{plain}                   % Simple page numbering
+\setlength{\parindent}{0pt}         % No paragraph indentation (modern style)
+\setlength{\parskip}{0.5ex}         % Small paragraph spacing
+
+% ============================================
+% DOCUMENT BEGIN
+% ============================================
+
+\begin{document}
+
+% ---------- Custom Header ----------
+% Set your values here:
+\sheetnumber{2}                     % Replace with actual sheet number
+\studentname{Амехин Илья}           % Replace with student name
+\assignmenttitle{Многочлены и конечные поля} % Replace with assignment title
+\maketitle
+
+
+% --- Problem 1 ---
+\begin{task}
+    Найдите обратный к $f(x)$ в кольце вычетов $k[x]/(g(x))$, если такой существует
+    \begin{enumerate}
+	\item $\textbf{k} = \mathbb{Q}$, $f(x) = x^6 + x + 1, g(x) = x^2 + 1$
+	\item $\textbf{k} = \mathbb{F}_2$, $f(x) = x^7 + 1, g(x) = x^2 + x + 1$
+    \end{enumerate}
+\end{task}
+
+\sol
+\soli{1} Найдем НОД$(f,g)$ в $\mathbb{Q}[x]$. Так как $g(x)=x^2+1$, проверим значения в корнях $g$: $i$ и $-i$. 
+\[
+f(i)=i^6+i+1=-1+i+1=i\neq 0,\quad f(-i)=(-i)^6-i+1=-1-i+1=-i\neq 0,
+\]
+$g(x) = x^2 + 1$ неприводим над $\mathbb{Q}$, поэтому из $f(i) \neq 0$ и $f(-i) \neq 0$ следет $\gcd(f(x),g(x)) = 1$
+Применим алгоритм Евклида:
+\[
+\begin{aligned}
+f &= x^4 g + (-x^4+x+1),\\
+-x^4+x+1 &= (-x^2)g + (x^2+x+1),\\
+x^2+x+1 &= 1\cdot g + x,\\
+g &= x\cdot x + 1.
+\end{aligned}
+\]
+Отсюда выражаем $1$:
+\[
+1 = g - x\cdot x = g - x\big((x^2+x+1)-g\big) = (1+x)g - x(x^2+x+1).
+\]
+Далее, $x^2+x+1 = (-x^4+x+1) - (-x^2)g = (f - x^4 g) + x^2 g = f + (x^2 - x^4)g$. Подставляя, получаем
+\[
+1 = (1+x)g - x\big(f + (x^2 - x^4)g\big) = -x f + \big(1+x - x(x^2 - x^4)\big)g.
+\]
+Упрощаем коэффициент при $g$: $1+x - x^3 + x^5 = x^5 - x^3 + x + 1$. Следовательно,
+\[
+1 = -x\cdot f(x) + (x^5 - x^3 + x + 1)\cdot g(x).
+\]
+Значит, обратным к $f$ по модулю $g$ является многочлен $-x$. 
+\[
+\boxed{f^{-1}(x) \equiv -x \pmod{x^2+1}}.
+\]
+
+\soli{2} В $\mathbb{F}_2[x]$ имеем $g(x)=x^2+x+1$. Заметим, что $x^3 \equiv 1 \pmod{g(x)}$, так как $x^3+1 = (x+1)(x^2+x+1)$ в $\mathbb{F}_2[x]$. Тогда
+\[
+x^7 = x^{6}\cdot x = (x^3)^2 \cdot x \equiv 1^2 \cdot x = x \pmod{g},
+\]
+поэтому
+\[
+f(x)=x^7+1 \equiv x+1 \pmod{g}.
+\]
+Остаток $x+1$ не равен нулю и взаимно прост с $g$ (проверка: $g(1)=1$), значит $\gcd(f,g)=1$, обратный существует.
+
+Из $f \equiv x+1$ получаем
+\[
+x f \equiv x(x+1) = x^2+x \equiv 1 \pmod{g},
+\]
+поскольку $g = x^2+x+1 \equiv 0 \Rightarrow x^2+x \equiv 1$ (в $\mathbb{F}_2$ знак минус совпадает с плюсом). Следовательно,
+\[
+\boxed{f^{-1}(x) \equiv x \pmod{x^2+x+1}}.
+\]
+
+\newpage 
+
+\begin{task}
+    \begin{enumerate}
+	\item Пусть $\mathbb{F}_4 \cong \mathbb{F}_2[a]/(\alpha^2 + \alpha + 1)$ -- поле из четырёх элементов, которые мы обозначим $\{0, 1, [\alpha], [\alpha + 1]\}$. Найдите все делители нуля и все обратимые элементы (и обратные к ним) в кольце $\mathbb{F}_4[x] / (x^2 + [\alpha + 1]x + [\alpha])$
+    \end{enumerate}
+\end{task}
+
+\sol
+\soli{1}
+
+Обозначим $a=[\alpha]$. Тогда
+\[
+a^2+a+1=0,\qquad a^2=a+1,
+\]
+и
+\[
+g(x)=x^2+(a+1)x+a.
+\]
+Имеем
+\[
+g(1)=1+(a+1)+a=0,
+\]
+\[
+g(a)=a^2+(a+1)a+a=a^2+a^2+a+a=0.
+\]
+Следовательно,
+\[
+g(x)=(x+1)(x+a).
+\]
+Кроме того,
+\[
+\gcd(x+1,x+a)=1,
+\]
+поскольку их разность равна $a+1\ne0$. Поэтому по китайской теореме об остатках
+\[
+\mathbb{F}_4[x]/(g)
+\cong
+\mathbb{F}_4[x]/(x+1)\times\mathbb{F}_4[x]/(x+a)
+\cong\mathbb{F}_4\times\mathbb{F}_4,
+\]
+где изоморфизм имеет вид
+\[
+f(x)\longmapsto(f(1),f(a)).
+\]
+
+Так как $\deg g=2$, каждый класс имеет единственного представителя
+\[
+ux+v,\qquad u,v\in\mathbb{F}_4,
+\]
+и при указанном изоморфизме
+\[
+ux+v\longmapsto(u+v,\;ua+v).
+\]
+
+В произведении $\mathbb{F}_4\times\mathbb{F}_4$ элемент обратим тогда и только тогда, когда обе его компоненты ненулевые, а ненулевой делитель нуля -- тогда и только тогда, когда ровно одна компонента равна нулю.
+
+Если $u+v=0$, то $v=u$, и при $u\ne0$ получаем
+\[
+x+1,\qquad a(x+1),\qquad (a+1)(x+1).
+\]
+Если $ua+v=0$, то $v=ua$, и при $u\ne0$ получаем
+\[
+x+a,\qquad ax+a+1,\qquad (a+1)x+1.
+\]
+Таким образом, все делители нуля:
+\[
+\boxed{
+x+1,\quad a(x+1),\quad (a+1)(x+1),\quad
+x+a,\quad ax+a+1,\quad (a+1)x+1
+}.
+\]
+
+Обратимых элементов $3\cdot3=9$. Их можно получить из условий
+\[
+u+v\ne0,\qquad ua+v\ne0.
+\]
+Получаем:
+\[
+\begin{array}{c|c}
+\text{элемент} & \text{обратный} \\ \hline
+1 & 1 \\
+a & a+1 \\
+a+1 & a \\
+x & (a+1)x+a \\
+x+a+1 & (a+1)x \\
+ax+1 & ax \\
+ax & ax+1 \\
+(a+1)x & x+a+1 \\
+(a+1)x+a & x
+\end{array}
+\]
+
+Наконец,
+\[
+1+6+9=16=|\mathbb{F}_4[x]/(g)|,
+\]
+поэтому перечислены все элементы кольца.
+
+\end{document}
